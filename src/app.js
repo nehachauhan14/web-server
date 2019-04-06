@@ -17,6 +17,11 @@ hbs.registerPartials(partialPath);
 // Setup static directory to serve
 app.use(express.static(publicDirPath));
 
+// import utills
+
+const geocode = require('./utils/geocode');
+const forecast = require ('./utils/forecast');
+
 app.get('', (req, res) => {
     res.render('index', {
         name: 'Neha',
@@ -40,10 +45,35 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: 30,
-        location: 'delhi, india'
-    });
+    
+    if(!req.query.address) {
+        return res.send({
+            error: 'Address must be provided!'
+        })
+    }
+
+    geocode.geoCode(req.query.address, (error, response) => {
+        if(error) {
+            return res.send({
+                error: error
+            });
+        }
+        let loc = response.location;
+
+        forecast.forecast(response.latitude, response.longitude, (error, response) => {
+            if(error) {
+                return res.send({
+                    error: error
+                });
+            }
+            
+            res.send({
+                forecast: response.apparentTemperature,
+                address: req.query.address,
+                location: loc
+            });
+        })
+    })
 });
 
 app.get('/help/*', (req, res) => {
