@@ -46,6 +46,19 @@ app.get('/weather', (req, res) => {
     });
 });
 
+app.get('/help/*', (req, res) => {
+    res.render('notFound', {
+        title: 'Help article not found!',
+        name: 'Neha Chauhan'
+    })
+});
+
+app.get('*', (req, res) => {
+    res.render('notFound', {
+        title: '404 Not found!',
+        name: 'Neha Chauhan'
+    })
+});
 
 app.listen('1408', () => {
     console.log('Server listing to port 1408!');
