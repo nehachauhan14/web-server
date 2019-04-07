@@ -52,25 +52,24 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode.geoCode(req.query.address, (error, response) => {
+    geocode.geoCode(req.query.address, (error, {latitude, longitude, location}) => {
         if(error) {
             return res.send({
                 error: error
             });
         }
-        let loc = response.location;
 
-        forecast.forecast(response.latitude, response.longitude, (error, response) => {
+        forecast.forecast(latitude, longitude, (error, {apparentTemperature}) => {
             if(error) {
                 return res.send({
-                    error: error
+                    error
                 });
             }
             
             res.send({
-                forecast: response.apparentTemperature,
+                forecast: apparentTemperature,
                 address: req.query.address,
-                location: loc
+                location
             });
         })
     })
