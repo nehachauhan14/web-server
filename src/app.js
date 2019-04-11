@@ -22,7 +22,7 @@ app.use(express.static(publicDirPath));
 const geocode = require('./utils/geocode');
 const forecast = require ('./utils/forecast');
 
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index', {
         name: 'Neha',
         title: 'Weather app'
