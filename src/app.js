@@ -3,6 +3,7 @@ const express = require('express');
 const hbs = require('hbs');
 
 const app = express();
+const port = process.env.PORT || 1408;
 
 // Define path for Express config
 const publicDirPath = path.join(__dirname, '../public');
@@ -89,6 +90,6 @@ app.get('*', (req, res) => {
     })
 });
 
-app.listen('1408', () => {
-    console.log('Server listing to port 1408!');
-})
+app.listen(port , () => {
+    console.log(`Server listing to port ${port}!`);
+});

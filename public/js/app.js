@@ -8,7 +8,7 @@ weatherForm.addEventListener('submit', (e) => {
     
     let location = search.value;
 
-    fetch(`http://localhost:1408/weather?address=${encodeURIComponent(location)}`).then((response) => {
+    fetch(`/weather?address=${encodeURIComponent(location)}`).then((response) => {
         
         response.json().then((data) => {
             if(data.error) {
